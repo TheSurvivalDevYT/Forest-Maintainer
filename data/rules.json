@@ -1,0 +1,62 @@
+[
+    {
+        "number": 1,
+        "description": "**Respect all members** - Treat everyone with kindness and respect. No harassment, bullying, or discriminatory language will be tolerated.",
+        "severity": "Medium",
+        "punishment": "Warning → Mute → Temporary Ban"
+    },
+    {
+        "number": 2,
+        "description": "**No spam or excessive messages** - Avoid sending repetitive messages, excessive emojis, or flooding channels with unnecessary content.",
+        "severity": "Low",
+        "punishment": "Warning → Mute"
+    },
+    {
+        "number": 3,
+        "description": "**Keep conversations in appropriate channels** - Use designated channels for their intended purposes. General chat goes in general, memes in meme channels, etc.",
+        "severity": "Low",
+        "punishment": "Reminder → Warning"
+    },
+    {
+        "number": 4,
+        "description": "**No NSFW content** - This server is meant to be appropriate for all ages. No sexual, violent, or otherwise inappropriate content.",
+        "severity": "High",
+        "punishment": "Immediate Ban"
+    },
+    {
+        "number": 5,
+        "description": "**No advertising or self-promotion** - Don't advertise other Discord servers, social media, or personal projects without permission from moderators.",
+        "severity": "Medium",
+        "punishment": "Warning → Temporary Ban"
+    },
+    {
+        "number": 6,
+        "description": "**Use appropriate usernames and avatars** - Your username and profile picture should be appropriate and not offensive or misleading.",
+        "severity": "Low",
+        "punishment": "Forced nickname change → Warning"
+    },
+    {
+        "number": 7,
+        "description": "**No doxxing or sharing personal information** - Never share someone else's personal information without their consent. This includes real names, addresses, phone numbers, etc.",
+        "severity": "High",
+        "punishment": "Immediate Ban"
+    },
+    {
+        "number": 8,
+        "description": "**Follow Discord's Terms of Service** - All Discord ToS rules apply here. This includes age restrictions (13+) and prohibited content guidelines.",
+        "severity": "High",
+        "punishment": "Immediate Ban"
+    },
+    {
+        "number": 9,
+        "description": "**No ban evasion** - Creating alternate accounts to bypass bans will result in all accounts being permanently banned.",
+        "severity": "High",
+        "punishment": "Permanent Ban (all accounts)"
+    },
+    {
+        "number": 10,
+        "description": "**Listen to moderators** - When a moderator asks you to stop doing something or change your behavior, please comply. Arguing with moderation decisions should be done in DMs.",
+        "severity": "Medium",
+        "punishment": "Warning → Mute → Temporary Ban"
+    }
+]
