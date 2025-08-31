@@ -211,6 +211,51 @@ class LevelingSystem {
     getMilestones() {
         return this.milestones;
     }
+
+    /**
+     * Get top users by message count
+     * @param {number} limit - Number of users to return
+     * @returns {Array} Array of user objects sorted by message count
+     */
+    async getTopUsers(limit = 10) {
+        try {
+            const { users } = await import('../server/db.js');
+            const { db } = await import('../server/db.js');
+            const { desc } = await import('drizzle-orm');
+
+            const topUsers = await db
+                .select()
+                .from(users)
+                .orderBy(desc(users.messageCount))
+                .limit(limit);
+
+            return topUsers;
+        } catch (error) {
+            console.error('Error getting top users:', error);
+            return [];
+        }
+    }
+
+    /**
+     * Get total user count
+     * @returns {number} Total number of users in database
+     */
+    async getTotalUserCount() {
+        try {
+            const { users } = await import('../server/db.js');
+            const { db } = await import('../server/db.js');
+            const { count } = await import('drizzle-orm');
+
+            const result = await db
+                .select({ count: count() })
+                .from(users);
+
+            return result[0]?.count || 0;
+        } catch (error) {
+            console.error('Error getting total user count:', error);
+            return 0;
+        }
+    }
 }
 
 module.exports = new LevelingSystem();
