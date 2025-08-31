@@ -1,0 +1,20 @@
+[
+    {
+        "number": 1,
+        "question": "How do I get started?",
+        "answer": "Welcome! This is a placeholder FAQ answer. You can edit this file to add your own questions and answers.",
+        "category": "General"
+    },
+    {
+        "number": 2,
+        "question": "Where can I find the rules?",
+        "answer": "You can view our server rules by using the `/rule` command followed by a rule number (1-16).",
+        "category": "Server Info"
+    },
+    {
+        "number": 3,
+        "question": "How do I contact moderators?",
+        "answer": "You can contact moderators by using the @Discord Support or @Game Support roles for help, or by sending a direct message.",
+        "category": "Support"
+    }
+]
