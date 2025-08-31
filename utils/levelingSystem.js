@@ -7,14 +7,15 @@ class LevelingSystem {
     constructor() {
         // Define message milestones and corresponding role names
         this.milestones = [
-            { messages: 100, roleName: '100 Messages' },
-            { messages: 500, roleName: '500 Messages' },
-            { messages: 1000, roleName: '1000 Messages' },
-            { messages: 2500, roleName: '2500 Messages' },
-            { messages: 5000, roleName: '5000 Messages' },
-            { messages: 10000, roleName: '10000 Messages' },
-            { messages: 25000, roleName: '25000 Messages' },
-            { messages: 50000, roleName: '50000 Messages' }
+            { messages: 10, roleName: 'Newbie Deer 10+ Messages' },
+            { messages: 100, roleName: 'Newborn Deer 100+ Messages' },
+            { messages: 500, roleName: 'New Deer 500+ Messages' },
+            { messages: 1000, roleName: 'Deer Enthuaist 1000+ Messages' },
+            { messages: 2500, roleName: 'Active Deer 2500+ Messages' },
+            { messages: 5000, roleName: 'Deerzilla 5000+ Messages' },
+            { messages: 10000, roleName: 'Dapatron 10K+ Messages' },
+            { messages: 25000, roleName: 'Holy Deer 25K+ Messages' },
+            { messages: 50000, roleName: 'Deer God 50K+ Messages' }
         ];
     }
 
