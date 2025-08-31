@@ -2,19 +2,49 @@
     {
         "number": 1,
         "question": "How do I get started?",
-        "answer": "Welcome! This is a placeholder FAQ answer. You can edit this file to add your own questions and answers.",
+        "answer": "Talk with others, learn whats happening, and for now wait for applications to open get some roles check out the channel and #behind-the-scenes.",
         "category": "General"
     },
     {
         "number": 2,
         "question": "Where can I find the rules?",
-        "answer": "You can view our server rules by using the `/rule` command followed by a rule number (1-16).",
+        "answer": "You can view our server rules by using the `/rule` command followed by a rule number (1-16) or by going to #rules.",
         "category": "Server Info"
     },
     {
         "number": 3,
         "question": "How do I contact moderators?",
-        "answer": "You can contact moderators by using the @Discord Support or @Game Support roles for help, or by sending a direct message.",
+        "answer": "You can contact moderators by using the @Discord Support or @Game Support roles for help, or by opening a ticket in the tickets category.",
         "category": "Support"
+    },
+    {
+        "number": 4,
+        "question": "How will I play?",
+        "answer": "It will share aspects with minecraft and a roblox game titled 99 nights in the forest, for movement you will probably have to pump your arms and depending on speed you will sprint or just walk.",
+        "category": "Gameplay"
+    },
+    {
+        "number": 5,
+        "question": "How do I get a role?",
+        "answer": "You can get level roles by talking and engaging with others and you can get Crafter, CC or Moderator roles by applying when the applications come out.",
+        "category": "Roles"
+    },
+    {
+        "number": 6,
+        "question": "What is this game?",
+        "answer": "It's a PC/VR crossplay game with the features of minecraft and a roblox game called 99 nights in the forest combined.",
+        "category": "Gameplay"
+    },
+    {
+        "number": 7,
+        "question": "What is the game called?",
+        "answer": "The game is called The Forest Game for now, it may change or it may not.",
+        "category": "Game"
+    },
+    {
+        "number": 8,
+        "question": "When's the game coming out?",
+        "answer": "It will most likely release June 26th 2026 at the maximum for now.",
+        "category": "Game"
     }
 ]

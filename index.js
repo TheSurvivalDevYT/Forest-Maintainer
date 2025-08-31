@@ -2,6 +2,7 @@ const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const config = require('./config');
 const commandHandler = require('./handlers/commandHandler');
 const logger = require('./utils/logger');
+const levelingSystem = require('./utils/levelingSystem');
 
 // Create Discord client with necessary intents
 const client = new Client({
@@ -49,6 +50,22 @@ client.on('interactionCreate', async (interaction) => {
         } else {
             await interaction.reply({ content: errorMessage, ephemeral: true });
         }
+    }
+});
+
+// Handle message events for leveling system
+client.on('messageCreate', async (message) => {
+    // Don't process bot messages
+    if (message.author.bot) return;
+    
+    // Don't process messages in DMs
+    if (!message.guild) return;
+
+    try {
+        await levelingSystem.handleMessage(message);
+    } catch (error) {
+        console.error('Error in leveling system:', error);
+        logger.log(`Leveling system error: ${error.message}`, 'ERROR');
     }
 });
 
