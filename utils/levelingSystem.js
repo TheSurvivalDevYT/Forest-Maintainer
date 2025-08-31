@@ -129,8 +129,23 @@ class LevelingSystem {
      */
     async awardMilestone(message, milestone) {
         try {
-            const guild = message.guild;
-            const member = message.member;
+            await this.awardMilestoneRole(message.member, milestone, true, message.channel);
+        } catch (error) {
+            console.error('Error awarding milestone:', error);
+            logger.error(`Error awarding milestone: ${error.message}`);
+        }
+    }
+
+    /**
+     * Award milestone role to a member
+     * @param {GuildMember} member - Discord guild member
+     * @param {Object} milestone - Milestone object with messages and roleName
+     * @param {boolean} announce - Whether to announce the milestone
+     * @param {Channel} channel - Channel to announce in (optional)
+     */
+    async awardMilestoneRole(member, milestone, announce = true, channel = null) {
+        try {
+            const guild = member.guild;
 
             // Find or create the role
             let role = guild.roles.cache.find(r => r.name === milestone.roleName);
@@ -147,18 +162,19 @@ class LevelingSystem {
             if (!member.roles.cache.has(role.id)) {
                 await member.roles.add(role);
                 
-                // Send congratulations message
-                const channel = message.channel;
-                const congratsMessage = `🎉 Congratulations ${message.author}! You've reached **${milestone.messages} messages** and earned the **${milestone.roleName}** role!`;
+                // Send congratulations message if requested
+                if (announce && channel) {
+                    const congratsMessage = `🎉 Congratulations ${member.user}! You've reached **${milestone.messages} messages** and earned the **${milestone.roleName}** role!`;
+                    await channel.send(congratsMessage);
+                }
                 
-                await channel.send(congratsMessage);
-                
-                logger.log(`${message.author.tag} earned ${milestone.roleName} role (${milestone.messages} messages)`, 'LEVELING');
+                logger.log(`${member.user.tag} earned ${milestone.roleName} role (${milestone.messages} messages)`, 'LEVELING');
             }
 
         } catch (error) {
-            console.error('Error awarding milestone:', error);
-            logger.error(`Error awarding milestone: ${error.message}`);
+            console.error('Error awarding milestone role:', error);
+            logger.error(`Error awarding milestone role: ${error.message}`);
+            throw error;
         }
     }
 
@@ -186,6 +202,14 @@ class LevelingSystem {
     async getUserMessageCount(discordId) {
         const user = await this.getUser(discordId);
         return user ? user.messageCount : 0;
+    }
+
+    /**
+     * Get milestones array
+     * @returns {Array} Array of milestone objects
+     */
+    getMilestones() {
+        return this.milestones;
     }
 }
 
