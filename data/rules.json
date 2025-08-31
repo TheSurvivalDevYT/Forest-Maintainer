@@ -1,62 +1,98 @@
 [
     {
         "number": 1,
-        "description": "**Respect all members** - Treat everyone with kindness and respect. No harassment, bullying, or discriminatory language will be tolerated.",
+        "description": "**Kindness only** - bullying or toxicity will not be tolerated and will ensue fair punishment.",
         "severity": "Medium",
-        "punishment": "Warning → Mute → Temporary Ban"
+        "punishment": "Warning or Mute"
     },
     {
         "number": 2,
-        "description": "**No spam or excessive messages** - Avoid sending repetitive messages, excessive emojis, or flooding channels with unnecessary content.",
+        "description": "**Use common sense** when you speak.",
         "severity": "Low",
-        "punishment": "Warning → Mute"
+        "punishment": "Warning"
     },
     {
         "number": 3,
-        "description": "**Keep conversations in appropriate channels** - Use designated channels for their intended purposes. General chat goes in general, memes in meme channels, etc.",
-        "severity": "Low",
-        "punishment": "Reminder → Warning"
+        "description": "**Swearing is allowed** as long as it's **not** a slur or **targetted** at anyone.",
+        "severity": "High",
+        "punishment": "Timeout → Temporary Ban → Permanent Timeout (Only if you are targetting someone) do these apply"
     },
     {
         "number": 4,
-        "description": "**No NSFW content** - This server is meant to be appropriate for all ages. No sexual, violent, or otherwise inappropriate content.",
-        "severity": "High",
+        "description": "**No slurs** - slur's no matter what will lead to a time out and if a continued offense is shown you will be banned.",
+        "severity": "HEAVY",
         "punishment": "Immediate Ban"
     },
     {
         "number": 5,
-        "description": "**No advertising or self-promotion** - Don't advertise other Discord servers, social media, or personal projects without permission from moderators.",
-        "severity": "Medium",
-        "punishment": "Warning → Temporary Ban"
+        "description": "**Follow Discord's TOS**: https://discord.com/terms",
+        "severity": "High",
+        "punishment": "Temporary Ban → Permanent Ban"
     },
     {
         "number": 6,
-        "description": "**Use appropriate usernames and avatars** - Your username and profile picture should be appropriate and not offensive or misleading.",
-        "severity": "Low",
-        "punishment": "Forced nickname change → Warning"
+        "description": "**No slur baiting**",
+        "severity": "High",
+        "punishment": "Temporary Ban → Permanent Ban"
     },
     {
         "number": 7,
-        "description": "**No doxxing or sharing personal information** - Never share someone else's personal information without their consent. This includes real names, addresses, phone numbers, etc.",
+        "description": "**Do not spam ping or mass ping others**",
         "severity": "High",
-        "punishment": "Immediate Ban"
+        "punishment": "Warning → Mute → Temporary Ban"
     },
     {
         "number": 8,
-        "description": "**Follow Discord's Terms of Service** - All Discord ToS rules apply here. This includes age restrictions (13+) and prohibited content guidelines.",
-        "severity": "High",
-        "punishment": "Immediate Ban"
+        "description": "**Always listen to moderators** when they say for you to do something.",
+        "severity": "Medium",
+        "punishment": "Timeout → Temporary Ban"
     },
     {
         "number": 9,
-        "description": "**No ban evasion** - Creating alternate accounts to bypass bans will result in all accounts being permanently banned.",
+        "description": "**@Discord Support (PING FOR HELP) and @Game Support (PING FOR HELP)** are not to be used for jokes, these are meant to be used for serious things or for tickets.",
         "severity": "High",
-        "punishment": "Permanent Ban (all accounts)"
+        "punishment": "Timeout → Temporary Ban"
     },
     {
         "number": 10,
-        "description": "**Listen to moderators** - When a moderator asks you to stop doing something or change your behavior, please comply. Arguing with moderation decisions should be done in DMs.",
+        "description": "**No spam or excessive messages** - Avoid sending repetitive messages, excessive emojis, or flooding channels with unnecessary content.",
         "severity": "Medium",
         "punishment": "Warning → Mute → Temporary Ban"
+    },
+    {
+        "number": 11,
+        "description": "**No NSFW content** - This server is meant to be appropriate for all ages. No sexual, violent, or otherwise inappropriate content.",
+        "severity": "Medium",
+        "punishment": "Warning → Mute → Temporary Ban"
+    },
+    {
+        "number": 12,
+        "description": "**No advertising or self-promotion** - Don't advertise other Discord servers, social media, or personal projects without permission from moderators.",
+        "severity": "Medium",
+        "punishment": "Warning → Mute → Temporary Ban"
+    },
+    {
+        "number": 13,
+        "description": "**No ban evasion** - Creating alternate accounts to bypass bans will result in all accounts being permanently banned.",
+        "severity": "HEAVY",
+        "punishment": "Permanent Ban"
+    },
+    {
+        "number": 14,
+        "description": "**No DM harassment** - Any bullying, illegal, or anything of the such used in dms to others in this server can result in you losing roles like Deercord Moderator, Deer Moderator, CC, Crafter.",
+        "severity": "Medium",
+        "punishment": "Warning → Mute → Temporary Ban"
+    },
+    {
+        "number": 15,
+        "description": "**No doxxing or sharing personal information** - Never share someone else's personal information without their consent. This includes real names, addresses, phone numbers, etc.",
+        "severity": "HEAVY",
+        "punishment": "Permanent Ban"
+    },
+    {
+        "number": 16,
+        "description": "**Use appropriate usernames and avatars** - Your username and profile picture should be appropriate and not offensive or misleading.",
+        "severity": "Medium",
+        "punishment": "Warning → Temporary Ban"
     }
 ]
