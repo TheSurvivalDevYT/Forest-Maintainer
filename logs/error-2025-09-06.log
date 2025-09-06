@@ -1,0 +1,8 @@
+[2025-09-06T00:02:46.243Z] [ERROR] Error executing command level: Unknown interaction
+[2025-09-06T00:02:46.318Z] [ERROR] Discord client error: Unknown interaction
+[2025-09-06T00:03:34.499Z] [ERROR] Error executing command message: Interaction has already been acknowledged.
+[2025-09-06T00:03:34.582Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-09-06T00:55:09.649Z] [ERROR] Error executing command rule: Unknown interaction
+[2025-09-06T00:55:09.753Z] [ERROR] Discord client error: Unknown interaction
+[2025-09-06T01:17:04.724Z] [ERROR] Error executing command rule: Unknown interaction
+[2025-09-06T01:17:04.945Z] [ERROR] Discord client error: Interaction has already been acknowledged.

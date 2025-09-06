@@ -1,111 +1,54 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const sqlite3 = require("sqlite3").verbose();
-const path = require("path");
-
-// Database setup
-const db = new sqlite3.Database(path.join(__dirname, "leaderboard.db"), (err) => {
-    if (err) return console.error("SQLite error:", err.message);
-    console.log("✅ Connected to leaderboard SQLite database");
-});
-
-// Create table if not exists
-db.run(`
-    CREATE TABLE IF NOT EXISTS messages (
-        userId TEXT PRIMARY KEY,
-        count INTEGER
-    )
-`);
-
-function trackMessage(message) {
-    if (message.author.bot) return;
-    const userId = message.author.id;
-
-    db.get("SELECT count FROM messages WHERE userId = ?", [userId], (err, row) => {
-        if (err) return console.error(err.message);
-        if (!row) {
-            db.run("INSERT INTO messages(userId, count) VALUES(?, ?)", [userId, 1]);
-        } else {
-            db.run("UPDATE messages SET count = ? WHERE userId = ?", [row.count + 1, userId]);
-        }
-    });
-}
-
-async function getTopUsers(limit = 10) {
-    return new Promise((resolve, reject) => {
-        db.all(
-            "SELECT * FROM messages ORDER BY count DESC LIMIT ?",
-            [limit],
-            (err, rows) => {
-                if (err) reject(err);
-                else resolve(rows);
-            }
-        );
-    });
-}
-
-async function getUserRank(userId) {
-    return new Promise((resolve, reject) => {
-        db.all(
-            "SELECT userId FROM messages ORDER BY count DESC",
-            [],
-            (err, rows) => {
-                if (err) return reject(err);
-                const rank = rows.findIndex(row => row.userId === userId);
-                resolve(rank !== -1 ? rank + 1 : null);
-            }
-        );
-    });
-}
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const levelingSystem = require('../utils/levelingSystem');
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("leaderboard")
-        .setDescription("Shows the top users by message count")
-        .addIntegerOption(option =>
-            option.setName("limit")
-                .setDescription("Number of users to show (default: 10)")
-                .setRequired(false)
-                .setMinValue(1)
-                .setMaxValue(25)
-        ),
+		data: new SlashCommandBuilder()
+				.setName('leaderboard')
+				.setDescription('Show the top users by message count')
+				.addIntegerOption(option =>
+						option.setName('limit')
+								.setDescription('Number of top users to show (default 10)')
+								.setRequired(false)
+				),
 
-    async execute(interaction) {
-        await interaction.deferReply();
-        const limit = interaction.options.getInteger("limit") || 10;
+		async execute(interaction) {
+				const limit = interaction.options.getInteger('limit') || 10;
 
-        const topUsers = await getTopUsers(limit);
-        if (!topUsers.length) return interaction.editReply("No messages tracked yet.");
+				try {
+						const topUsers = await levelingSystem.getTopUsers(limit);
 
-        let leaderboard = "";
-        for (let i = 0; i < topUsers.length; i++) {
-            const userId = topUsers[i].userId;
-            const count = topUsers[i].count;
-            const user = await interaction.client.users.fetch(userId).catch(() => null);
-            leaderboard += `**#${i + 1}** ${user ? user.username : "Unknown"} — ${count} messages\n`;
-        }
+						if (!topUsers || topUsers.length === 0) {
+								return interaction.reply({
+										content: 'No users found in the database yet. Have your members send some messages first!',
+										ephemeral: true
+								});
+						}
 
-        const callerId = interaction.user.id;
-        const callerRank = await getUserRank(callerId);
-        if (callerRank) {
-            const userCount = await new Promise((res, rej) => {
-                db.get("SELECT count FROM messages WHERE userId = ?", [callerId], (err, row) => {
-                    if (err) return rej(err);
-                    res(row?.count || 0);
-                });
-            });
-            leaderboard += `\n👤 **Your Rank:** #${callerRank} — ${userCount} messages`;
-        } else {
-            leaderboard += "\n👤 You have no messages counted yet.";
-        }
+						// Map top users to leaderboard string with Discord mentions if available
+						const leaderboard = topUsers
+								.map((user, index) => {
+										// Check if the user is in the guild to mention them
+										const member = interaction.guild.members.cache.get(user.discordId);
+										const displayName = member ? `<@${user.discordId}>` : user.username;
+										return `**${index + 1}.** ${displayName} — ${user.messageCount} messages`;
+								})
+								.join('\n');
 
-        const embed = new EmbedBuilder()
-            .setColor("#f1c40f")
-            .setTitle("🏆 Message Leaderboard")
-            .setDescription(leaderboard)
-            .setTimestamp();
+						const embed = new EmbedBuilder()
+								.setTitle('📊 Message Leaderboard')
+								.setDescription(leaderboard)
+								.setColor('#3498db')
+								.setTimestamp()
+								.setFooter({ text: `Top ${topUsers.length} users` });
 
-        await interaction.editReply({ embeds: [embed] });
-    },
+						await interaction.reply({ embeds: [embed] });
 
-    trackMessage
+				} catch (error) {
+						console.error('Error fetching leaderboard:', error);
+						await interaction.reply({
+								content: '❌ An error occurred while fetching the leaderboard.',
+								ephemeral: true
+						});
+				}
+		}
 };

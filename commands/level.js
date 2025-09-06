@@ -12,15 +12,6 @@ module.exports = {
         ),
     
     async execute(interaction) {
-        // Check if command is being used in #bot-commands channel
-        const allowedChannelName = 'bot-commands';
-        if (interaction.channel.name !== allowedChannelName) {
-            return await interaction.reply({
-                content: `❌ This command can only be used in #${allowedChannelName}`,
-                ephemeral: true
-            });
-        }
-
         const targetUser = interaction.options.getUser('user') || interaction.user;
         
         try {

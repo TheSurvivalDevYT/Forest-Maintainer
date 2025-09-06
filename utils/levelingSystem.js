@@ -1,11 +1,9 @@
 const { db } = require('../server/db');
 const { users } = require('../server/schema');
-const { eq } = require('drizzle-orm');
-const logger = require('./logger');
+const { eq, desc } = require('drizzle-orm');
 
 class LevelingSystem {
     constructor() {
-        // Define message milestones and corresponding role names
         this.milestones = [
             { messages: 10, roleName: 'Newbie Deer 10+ Messages' },
             { messages: 100, roleName: 'Newborn Deer 100+ Messages' },
@@ -17,244 +15,102 @@ class LevelingSystem {
             { messages: 25000, roleName: 'Holy Deer 25K+ Messages' },
             { messages: 50000, roleName: 'Deer God 50K+ Messages' }
         ];
+
+        // Optional: a temporary in-memory cache to avoid race conditions
+        this.awardedRolesCache = new Set();
     }
 
-    /**
-     * Handle a user sending a message
-     * @param {Message} message - Discord message object
-     */
     async handleMessage(message) {
-        // Don't count bot messages
         if (message.author.bot) return;
 
-        try {
-            // Get or create user in database
-            let user = await this.getUser(message.author.id);
-            
-            if (!user) {
-                user = await this.createUser(message.author.id, message.author.username);
-            }
-
-            // Increment message count
-            const newMessageCount = user.messageCount + 1;
-            await this.updateMessageCount(message.author.id, newMessageCount);
-
-            // Check for milestone achievements
-            await this.checkMilestones(message, user.messageCount, newMessageCount);
-
-        } catch (error) {
-            console.error('Error handling message for leveling system:', error);
-            logger.error(`Leveling system error: ${error.message}`);
+        let user = await this.getUser(message.author.id);
+        if (!user) {
+            user = await this.createUser(message.author.id, message.author.username);
         }
+
+        const newCount = user.messageCount + 1;
+        await this.updateMessageCount(message.author.id, newCount);
+
+        await this.checkMilestones(message, user.messageCount, newCount);
     }
 
-    /**
-     * Get user from database
-     * @param {string} discordId - Discord user ID
-     * @returns {Object|null} User object or null
-     */
-    async getUser(discordId) {
-        try {
-            const [user] = await db.select().from(users).where(eq(users.discordId, discordId));
-            return user || null;
-        } catch (error) {
-            console.error('Error getting user:', error);
-            return null;
-        }
-    }
-
-    /**
-     * Create new user in database
-     * @param {string} discordId - Discord user ID
-     * @param {string} username - Discord username
-     * @returns {Object} Created user object
-     */
-    async createUser(discordId, username) {
-        try {
-            const [user] = await db
-                .insert(users)
-                .values({
-                    discordId,
-                    username,
-                    messageCount: 0
-                })
-                .returning();
-            return user;
-        } catch (error) {
-            console.error('Error creating user:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Update user message count
-     * @param {string} discordId - Discord user ID
-     * @param {number} messageCount - New message count
-     */
-    async updateMessageCount(discordId, messageCount) {
-        try {
-            await db
-                .update(users)
-                .set({ 
-                    messageCount,
-                    lastMessageAt: new Date()
-                })
-                .where(eq(users.discordId, discordId));
-        } catch (error) {
-            console.error('Error updating message count:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Check if user has reached any milestones
-     * @param {Message} message - Discord message object
-     * @param {number} oldCount - Previous message count
-     * @param {number} newCount - New message count
-     */
     async checkMilestones(message, oldCount, newCount) {
-        const reachedMilestones = this.milestones.filter(milestone => 
-            oldCount < milestone.messages && newCount >= milestone.messages
-        );
+        const reached = this.milestones.filter(m => oldCount < m.messages && newCount >= m.messages);
 
-        for (const milestone of reachedMilestones) {
-            await this.awardMilestone(message, milestone);
+        for (const milestone of reached) {
+            await this.awardMilestoneRole(message.member, milestone, message.channel);
         }
     }
 
-    /**
-     * Award milestone role to user
-     * @param {Message} message - Discord message object
-     * @param {Object} milestone - Milestone object with messages and roleName
-     */
-    async awardMilestone(message, milestone) {
-        try {
-            await this.awardMilestoneRole(message.member, milestone, true, message.channel);
-        } catch (error) {
-            console.error('Error awarding milestone:', error);
-            logger.error(`Error awarding milestone: ${error.message}`);
-        }
-    }
+    async awardMilestoneRole(member, milestone, channel = null) {
+        if (!member) return;
 
-    /**
-     * Award milestone role to a member
-     * @param {GuildMember} member - Discord guild member
-     * @param {Object} milestone - Milestone object with messages and roleName
-     * @param {boolean} announce - Whether to announce the milestone
-     * @param {Channel} channel - Channel to announce in (optional)
-     */
-    async awardMilestoneRole(member, milestone, announce = true, channel = null) {
         try {
-            const guild = member.guild;
+            // Use a unique key for caching to prevent double-sends
+            const cacheKey = `${member.id}-${milestone.roleName}`;
+            if (this.awardedRolesCache.has(cacheKey)) return;
 
-            // Find or create the role
-            let role = guild.roles.cache.find(r => r.name === milestone.roleName);
-            
+            let role = member.guild.roles.cache.find(r => r.name === milestone.roleName);
             if (!role) {
-                role = await guild.roles.create({
+                role = await member.guild.roles.create({
                     name: milestone.roleName,
                     color: this.getMilestoneColor(milestone.messages),
-                    reason: `Leveling system role for ${milestone.messages} messages`
+                    reason: `Leveling milestone role for ${milestone.messages} messages`
                 });
             }
 
-            // Add role to user
             if (!member.roles.cache.has(role.id)) {
                 await member.roles.add(role);
-                
-                // Send congratulations message if requested
-                if (announce && channel) {
-                    const congratsMessage = `🎉 Congratulations ${member.user}! You've reached **${milestone.messages} messages** and earned the **${milestone.roleName}** role!`;
-                    await channel.send(congratsMessage);
-                }
-                
-                logger.log(`${member.user.tag} earned ${milestone.roleName} role (${milestone.messages} messages)`, 'LEVELING');
-            }
+                this.awardedRolesCache.add(cacheKey);
 
+                if (channel) {
+                    channel.send(`🎉 Congratulations ${member.user}! You've reached **${milestone.messages} messages** and earned the **${milestone.roleName}** role!`);
+                }
+
+                // Optional: clear cache entry after a few seconds to prevent memory buildup
+                setTimeout(() => this.awardedRolesCache.delete(cacheKey), 5000);
+            }
         } catch (error) {
             console.error('Error awarding milestone role:', error);
-            logger.error(`Error awarding milestone role: ${error.message}`);
-            throw error;
         }
     }
 
-    /**
-     * Get color for milestone role based on message count
-     * @param {number} messageCount - Number of messages
-     * @returns {string} Hex color code
-     */
-    getMilestoneColor(messageCount) {
-        if (messageCount >= 50000) return '#e74c3c';      // Red
-        if (messageCount >= 25000) return '#9b59b6';      // Purple
-        if (messageCount >= 10000) return '#3498db';      // Blue
-        if (messageCount >= 5000) return '#1abc9c';       // Teal
-        if (messageCount >= 2500) return '#2ecc71';       // Green
-        if (messageCount >= 1000) return '#f39c12';       // Orange
-        if (messageCount >= 500) return '#e67e22';        // Dark Orange
-        return '#95a5a6';                                  // Gray
+    getMilestoneColor(messages) {
+        if (messages >= 50000) return '#e74c3c';
+        if (messages >= 25000) return '#9b59b6';
+        if (messages >= 10000) return '#3498db';
+        if (messages >= 5000) return '#1abc9c';
+        if (messages >= 2500) return '#2ecc71';
+        if (messages >= 1000) return '#f39c12';
+        if (messages >= 500) return '#e67e22';
+        return '#95a5a6';
     }
 
-    /**
-     * Get user's current message count
-     * @param {string} discordId - Discord user ID
-     * @returns {number} Message count
-     */
+    async getUser(discordId) {
+        const [user] = await db.select().from(users).where(eq(users.discordId, discordId));
+        return user || null;
+    }
+
+    async createUser(discordId, username) {
+        const [user] = await db.insert(users).values({ discordId, username, messageCount: 0 }).returning();
+        return user;
+    }
+
+    async updateMessageCount(discordId, messageCount) {
+        await db.update(users).set({ messageCount, lastMessageAt: new Date() }).where(eq(users.discordId, discordId));
+    }
+
     async getUserMessageCount(discordId) {
         const user = await this.getUser(discordId);
         return user ? user.messageCount : 0;
     }
 
-    /**
-     * Get milestones array
-     * @returns {Array} Array of milestone objects
-     */
+    async getTopUsers(limit = 10) {
+        return await db.select().from(users).orderBy(desc(users.messageCount)).limit(limit);
+    }
+
     getMilestones() {
         return this.milestones;
-    }
-
-    /**
-     * Get top users by message count
-     * @param {number} limit - Number of users to return
-     * @returns {Array} Array of user objects sorted by message count
-     */
-    async getTopUsers(limit = 10) {
-        try {
-            const { users } = await import('../server/db.js');
-            const { db } = await import('../server/db.js');
-            const { desc } = await import('drizzle-orm');
-
-            const topUsers = await db
-                .select()
-                .from(users)
-                .orderBy(desc(users.messageCount))
-                .limit(limit);
-
-            return topUsers;
-        } catch (error) {
-            console.error('Error getting top users:', error);
-            return [];
-        }
-    }
-
-    /**
-     * Get total user count
-     * @returns {number} Total number of users in database
-     */
-    async getTotalUserCount() {
-        try {
-            const { users } = await import('../server/db.js');
-            const { db } = await import('../server/db.js');
-            const { count } = await import('drizzle-orm');
-
-            const result = await db
-                .select({ count: count() })
-                .from(users);
-
-            return result[0]?.count || 0;
-        } catch (error) {
-            console.error('Error getting total user count:', error);
-            return 0;
-        }
     }
 }
 

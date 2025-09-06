@@ -1,0 +1,81 @@
+[2025-08-31T01:53:35.088Z] [ERROR] Unhandled rejection: An invalid token was provided.
+[2025-08-31T01:53:55.031Z] [ERROR] Unhandled rejection: An invalid token was provided.
+[2025-08-31T18:14:46.889Z] [ERROR] Unhandled rejection: Used disallowed intents
+[2025-08-31T18:14:46.985Z] [ERROR] Unhandled rejection: Used disallowed intents
+[2025-08-31T18:14:54.485Z] [ERROR] Unhandled rejection: Used disallowed intents
+[2025-08-31T18:16:27.624Z] [ERROR] Error executing command rule: Unknown interaction
+[2025-08-31T18:16:27.724Z] [ERROR] Discord client error: Unknown interaction
+[2025-08-31T19:00:20.422Z] [ERROR] Error awarding milestone: Missing Permissions
+[2025-08-31T19:02:55.185Z] [ERROR] Error awarding milestone: Missing Permissions
+[2025-08-31T19:05:01.082Z] [ERROR] Error executing command level: Interaction has already been acknowledged.
+[2025-08-31T19:05:01.148Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:05:26.559Z] [ERROR] Error executing command level: Interaction has already been acknowledged.
+[2025-08-31T19:05:26.623Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:06:09.032Z] [ERROR] Error executing command level: Interaction has already been acknowledged.
+[2025-08-31T19:06:09.085Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:07:34.909Z] [ERROR] Error executing command sync: Unknown interaction
+[2025-08-31T19:07:35.021Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:07:55.640Z] [ERROR] Sync error: Unknown Message
+[2025-08-31T19:07:55.769Z] [ERROR] Error executing command sync: Unknown Message
+[2025-08-31T19:08:06.492Z] [ERROR] Error executing command sync: Unknown interaction
+[2025-08-31T19:08:06.622Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:08:18.405Z] [ERROR] Error executing command sync: Unknown interaction
+[2025-08-31T19:08:18.497Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:09:54.993Z] [ERROR] Error executing command rule: Unknown interaction
+[2025-08-31T19:09:55.144Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:14:16.537Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T19:14:16.684Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:14:24.584Z] [ERROR] Error executing command sync: Unknown interaction
+[2025-08-31T19:14:24.714Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:19:13.843Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T19:19:13.945Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:19:39.422Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T19:19:39.510Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:19:45.658Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T19:19:45.810Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:25:24.528Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T19:25:24.642Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:25:32.317Z] [ERROR] Error executing command sync: Unknown interaction
+[2025-08-31T19:25:32.461Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:26:20.046Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T19:26:20.149Z] [ERROR] Discord client error: Unknown interaction
+[2025-08-31T19:33:56.670Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T19:33:56.797Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:34:01.290Z] [ERROR] Error executing command sync: Unknown interaction
+[2025-08-31T19:34:01.375Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:34:33.633Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T19:34:33.745Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T19:34:41.784Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T19:34:41.876Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T20:02:07.754Z] [ERROR] Leveling system error: Failed query: insert into "users" ("id", "discord_id", "username", "message_count", "last_message_at", "created_at") values (default, $1, $2, $3, default, default) returning "id", "discord_id", "username", "message_count", "last_message_at", "created_at"
+params: 1212594948881522752,bigshmo24,0
+[2025-08-31T20:07:33.809Z] [ERROR] Error executing command rule: Unknown interaction
+[2025-08-31T20:07:33.913Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T20:08:23.986Z] [ERROR] Error executing command rule: Unknown interaction
+[2025-08-31T20:08:24.345Z] [ERROR] Discord client error: Unknown interaction
+[2025-08-31T20:09:16.301Z] [ERROR] Error executing command level: Unknown interaction
+[2025-08-31T20:09:16.433Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T20:09:21.343Z] [ERROR] Error executing command level: Unknown interaction
+[2025-08-31T20:09:21.453Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T20:09:38.829Z] [ERROR] Error executing command level: Interaction has already been acknowledged.
+[2025-08-31T20:09:38.931Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T20:09:57.761Z] [ERROR] Error executing command message: Interaction has already been acknowledged.
+[2025-08-31T20:09:57.831Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T20:16:42.567Z] [ERROR] Error executing command faq: Unknown interaction
+[2025-08-31T20:16:42.669Z] [ERROR] Discord client error: Unknown interaction
+[2025-08-31T20:16:46.619Z] [ERROR] Error executing command faq: Unknown interaction
+[2025-08-31T20:16:46.701Z] [ERROR] Discord client error: Unknown interaction
+[2025-08-31T21:07:51.238Z] [ERROR] Error executing command leaderboard: Interaction has already been acknowledged.
+[2025-08-31T21:07:51.323Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T21:07:55.100Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T21:07:55.160Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T21:07:59.688Z] [ERROR] Error executing command sync: Unknown interaction
+[2025-08-31T21:07:59.866Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T21:08:34.332Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T21:08:34.438Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T21:08:38.597Z] [ERROR] Error executing command leaderboard: Unknown interaction
+[2025-08-31T21:08:38.721Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T21:12:01.175Z] [ERROR] Error executing command leaderboard: Interaction has already been acknowledged.
+[2025-08-31T21:12:01.247Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-08-31T21:33:08.969Z] [ERROR] Error executing command leaderboard: Interaction has already been acknowledged.
+[2025-08-31T21:33:09.045Z] [ERROR] Discord client error: Interaction has already been acknowledged.

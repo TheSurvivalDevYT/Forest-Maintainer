@@ -1,9 +1,9 @@
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
-const { Client, GatewayIntentBits, Collection } = require('SQlite.js');
 const config = require('./config');
 const commandHandler = require('./handlers/commandHandler');
 const logger = require('./utils/logger');
 const levelingSystem = require('./utils/levelingSystem');
+const automod = require('./utils/automod');
 
 // Create Discord client with necessary intents
 const client = new Client({
@@ -80,10 +80,9 @@ process.on('unhandledRejection', (error) => {
     console.error('Unhandled promise rejection:', error);
     logger.log(`Unhandled rejection: ${error.message}`, 'ERROR');
 });
-
-const leaderboard = require("./commands/leaderboard");
-
-client.on("messageCreate", leaderboard.trackMessage);
+client.on("messageCreate", (message) => {
+    automod.handleMessage(message);
+});
 
 // Login to Discord
 client.login(config.BOT_TOKEN);

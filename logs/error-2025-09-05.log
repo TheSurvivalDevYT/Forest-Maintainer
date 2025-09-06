@@ -1,0 +1,8 @@
+[2025-09-05T20:49:54.251Z] [ERROR] Error executing command faq: Unknown interaction
+[2025-09-05T20:49:54.348Z] [ERROR] Discord client error: Unknown interaction
+[2025-09-05T23:00:22.918Z] [ERROR] Leveling system error: Failed query: insert into "users" ("id", "discord_id", "username", "message_count", "last_message_at", "created_at") values (default, $1, $2, $3, default, default) returning "id", "discord_id", "username", "message_count", "last_message_at", "created_at"
+params: 1047256115081130084,poizonstudios,0
+[2025-09-05T23:36:32.222Z] [ERROR] Error executing command message: Interaction has already been acknowledged.
+[2025-09-05T23:36:32.272Z] [ERROR] Discord client error: Interaction has already been acknowledged.
+[2025-09-05T23:44:51.392Z] [ERROR] Error executing command level: Unknown interaction
+[2025-09-05T23:44:51.470Z] [ERROR] Discord client error: Unknown interaction
